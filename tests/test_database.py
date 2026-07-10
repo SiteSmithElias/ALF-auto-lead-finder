@@ -1,11 +1,13 @@
 from database.database import SessionLocal
-from database.models import Company
+
+from services.company_service import create_company
 
 
 db = SessionLocal()
 
 
-company = Company(
+company = create_company(
+    db=db,
     name="Cadcamatic",
     website="https://www.cadcamatic.be/",
     industry="Industrial",
@@ -13,13 +15,6 @@ company = Company(
     country="Belgium",
     city="Torhout"
 )
-
-
-db.add(company)
-
-db.commit()
-
-db.refresh(company)
 
 
 print(company.id)

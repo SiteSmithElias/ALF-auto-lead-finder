@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from database.models import Company
 
 
-def create_company(
+def save_company(
     db: Session,
     name: str,
     website: str,
@@ -20,6 +20,15 @@ def create_company(
     )
 
     if existing_company:
+        existing_company.name = name
+        existing_company.industry = industry
+        existing_company.description = description
+        existing_company.country = country
+        existing_company.city = city
+
+        db.commit()
+        db.refresh(existing_company)
+
         return existing_company
 
 

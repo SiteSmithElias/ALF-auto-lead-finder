@@ -1,17 +1,17 @@
 from database.database import SessionLocal
 
-from services.company_service import create_company
+from services.company_service import save_company
 
 
 db = SessionLocal()
 
 
-company = create_company(
+company = save_company(
     db=db,
     name="Cadcamatic",
     website="https://www.cadcamatic.be/",
     industry="Industrial",
-    description="Custom high-tech factory automation",
+    description="Custom high-tech factory solutions",
     country="Belgium",
     city="Torhout"
 )

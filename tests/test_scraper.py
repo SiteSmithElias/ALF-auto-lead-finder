@@ -1,9 +1,19 @@
-from scraper.website_scraper import scrape_website
+from pathlib import Path
+
+from bs4 import BeautifulSoup
+
 from scraper.company_extractor import extract_company_info
+from scraper.contact_extractor import extract_emails
 
 
-page = scrape_website(
-    "https://example.com"
+html = Path(
+    "tests/mocks/mock_company.html"
+).read_text()
+
+
+page = BeautifulSoup(
+    html,
+    "html.parser"
 )
 
 
@@ -12,4 +22,10 @@ company = extract_company_info(
 )
 
 
+emails = extract_emails(
+    page
+)
+
+
 print(company)
+print(emails)

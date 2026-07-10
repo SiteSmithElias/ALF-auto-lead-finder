@@ -63,3 +63,22 @@ class Contact(Base):
     phone = Column(
         String
     )
+
+class LeadScore(Base):
+    __tablename__ = "lead_scores"
+
+    company_id = Column(
+        Integer,
+        ForeignKey("companies.id"),
+        primary_key=True
+    )
+    score = Column(
+        Integer
+    )
+    reason = Column(
+        Text
+    )
+    updated_at = Column(
+        DateTime(timezone=True),
+        onupdate=func.now()
+    )

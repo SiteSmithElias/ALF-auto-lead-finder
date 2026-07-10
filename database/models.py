@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 
 from database.database import Base
 
@@ -41,6 +42,11 @@ class Company(Base):
         onupdate=func.now()
     )
 
+    contacts = relationship(
+    "Contact",
+    back_populates="company"
+    )
+
 class Contact(Base):
     __tablename__ = "contacts"
 
@@ -62,6 +68,11 @@ class Contact(Base):
     )
     phone = Column(
         String
+    )
+
+    company = relationship(
+    "Company",
+    back_populates="contacts"
     )
 
 class LeadScore(Base):

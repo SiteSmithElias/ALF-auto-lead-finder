@@ -40,3 +40,26 @@ class Company(Base):
         DateTime(timezone=True),
         onupdate=func.now()
     )
+
+class Contact(Base):
+    __tablename__ = "contacts"
+
+    id = Column(
+        Integer,
+        primary_key=True,
+        index=True
+    )
+    company_id = Column(
+        Integer,
+        ForeignKey("companies.id"),
+        nullable=False
+    )
+    name = Column(
+        String
+    )
+    email = Column(
+        String
+    )
+    phone = Column(
+        String
+    )

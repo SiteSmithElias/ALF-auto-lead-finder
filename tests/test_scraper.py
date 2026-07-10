@@ -1,4 +1,5 @@
 from scraper.website_scraper import scrape_website
+from scraper.company_extractor import extract_company_info
 
 
 page = scrape_website(
@@ -6,6 +7,9 @@ page = scrape_website(
 )
 
 
-print(
-    page.title.text
+company = extract_company_info(
+    page
 )
+
+
+print(company)

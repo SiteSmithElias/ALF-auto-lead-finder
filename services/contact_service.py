@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 
 from database.models import Contact
+from utils.normalizer import (clean_email, clean_text)
 
 
 def save_contact(
@@ -10,6 +11,9 @@ def save_contact(
     email: str | None = None,
     phone: str | None = None
 ):
+    email = clean_email(email)
+    name = clean_text(name)
+
     existing_contact = (
         db.query(Contact)
         .filter(

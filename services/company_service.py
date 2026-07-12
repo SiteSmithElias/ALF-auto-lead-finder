@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 
 from database.models import Company
+from utils.normalizer import (clean_text, clean_url)
 
 
 def save_company(
@@ -12,6 +13,10 @@ def save_company(
     country: str | None = None,
     city: str | None = None
 ):
+
+    name = clean_text(name)
+    website = clean_url(website)
+    description = clean_text(description)
 
     existing_company = (
         db.query(Company)
@@ -30,7 +35,6 @@ def save_company(
         db.refresh(existing_company)
 
         return existing_company
-
 
     company = Company(
         name=name,

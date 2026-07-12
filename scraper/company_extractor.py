@@ -2,30 +2,28 @@ from bs4 import BeautifulSoup
 
 
 def extract_company_info(
-    soup: BeautifulSoup
+    pages
 ):
 
     title = None
     description = None
 
 
-    if soup.title:
-        title = soup.title.text.strip()
+    for page in pages:
+        if not title and page.title:
+            title = page.title.text.strip()
 
-
-    description_tag = soup.find(
-        "meta",
-        attrs={
-            "name": "description"
-        }
-    )
-
-
-    if description_tag:
-        description = description_tag.get(
-            "content"
+        description_tag = page.find(
+            "meta",
+            attrs={
+                "name": "description"
+            }
         )
 
+        if description_tag:
+            description = description_tag.get(
+                "content"
+            )
 
     return {
         "name": title,

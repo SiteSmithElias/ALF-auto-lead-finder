@@ -1,6 +1,6 @@
 from database.database import SessionLocal
 
-from scraper.website_scraper import scrape_website
+from scraper.crawler import crawl_website
 from scraper.company_extractor import extract_company_info
 from scraper.contact_extractor import extract_emails
 
@@ -14,12 +14,12 @@ def scan_company(url: str):
 
 
     try:
-        page = scrape_website(url)
+        pages = crawl_website(url)
 
-        if page is None:
+        if not pages:
             return None
 
-        company_data = extract_company_info(page)
+        company_data = extract_company_info(pages)
 
         company = save_company(
             db=db,
@@ -28,7 +28,7 @@ def scan_company(url: str):
             description=company_data["description"]
         )
 
-        emails = extract_emails(page)
+        emails = extract_emails(pages)
         for email in emails:
 
             save_contact(

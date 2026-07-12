@@ -15,6 +15,10 @@ def scan_company(url: str):
 
     try:
         page = scrape_website(url)
+
+        if page is None:
+            return None
+
         company_data = extract_company_info(page)
 
         company = save_company(

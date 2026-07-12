@@ -39,10 +39,16 @@ def scan_company(url: str):
         )
 
         return {
-            "company": company,
-            "score": score
+            "company": {
+                "id": company.id,
+                "name": company.name,
+                "website": company.website
+            },
+            "score": {
+                "value": score.score,
+                "reason": score.reason
+            }
         }
 
     finally:
-
         db.close()

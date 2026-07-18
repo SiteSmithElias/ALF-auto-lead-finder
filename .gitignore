@@ -15,6 +15,9 @@ venv/
 *.db-journal
 *.sqlite3
 
+# Playwright persistent profile
+browser_data/
+
 # Alembic cache
 .alembic/
 

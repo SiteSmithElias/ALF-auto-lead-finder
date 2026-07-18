@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Float
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 
@@ -16,12 +16,21 @@ class Company(Base):
         String,
         nullable=False
     )
+    address = Column(
+        String
+    )
     website = Column(
         String,
         unique=True,
-        nullable=False
+        nullable=True
+    )
+    phone = Column(
+        String
     )
     industry = Column(
+        String
+    )
+    category = Column(
         String
     )
     description = Column(
@@ -32,6 +41,28 @@ class Company(Base):
     )
     city = Column(
         String
+    )
+    source = Column(
+        String,
+        default="google_maps",
+        nullable=False
+    )
+    external_id = Column(
+        String,
+        unique=True,
+        index=True
+    )
+    reviews_count = Column(
+        Integer
+    )
+    reviews_average = Column(
+        Float
+    )
+    latitude = Column(
+        Float
+    )
+    longitude = Column(
+        Float
     )
     created_at = Column(
         DateTime(timezone=True),

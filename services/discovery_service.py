@@ -32,16 +32,6 @@ def save_discovered_business(
     country = clean_text(business.country)
     category = clean_text(business.category)
 
-    description_parts = [
-        part
-        for part in (
-            business.phone,
-            business.website,
-        )
-        if part
-    ]
-    description = clean_text(" | ".join(description_parts)) if description_parts else None
-
     company = save_company(
         db=db,
         name=name or "Unknown business",
@@ -50,7 +40,6 @@ def save_discovered_business(
         phone=business.phone,
         industry=category,
         category=category,
-        description=description,
         country=country,
         city=city,
         source=business.source,

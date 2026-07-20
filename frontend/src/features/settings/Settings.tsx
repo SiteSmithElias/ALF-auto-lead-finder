@@ -1,5 +1,5 @@
-import ProfileCard from "../components/settings/ProfileCard";
-import AppearanceCard from "../components/settings/AppearanceCard";
+import ProfileCard from "./components/ProfileCard";
+import AppearanceCard from "./components/AppearanceCard";
 
 export default function Settings() {
   return (

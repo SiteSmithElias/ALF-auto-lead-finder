@@ -1,4 +1,4 @@
-import type { Lead } from "../../types/lead";
+import type { Lead } from "../lead";
 
 export default function LeadInfoCard({ lead }: { lead: Lead }) {
   return (

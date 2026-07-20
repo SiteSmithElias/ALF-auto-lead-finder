@@ -1,6 +1,6 @@
 import { useState } from "react";
-import SearchInput from "../components/discovery/SearchInput";
-import DiscoveryProgress from "../components/discovery/DiscoveryProgress";
+import SearchInput from "./components/SearchInput";
+import DiscoveryProgress from "./components/DiscoveryProgress";
 
 
 export default function Discovery() {

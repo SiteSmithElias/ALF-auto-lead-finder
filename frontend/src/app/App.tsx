@@ -4,7 +4,7 @@ import {
 
 import {
     router
-} from "./router/Router";
+} from "./Routes";
 
 
 function App() {

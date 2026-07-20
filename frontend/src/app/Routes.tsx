@@ -3,14 +3,12 @@ import {
 } from "react-router-dom";
 
 
-import Layout from "../components/layout/Layout";
-
-
-import Dashboard from "../pages/Dashboard";
-import Discovery from "../pages/Discovery";
-import Leads from "../pages/Leads";
-import LeadDetail from "../pages/LeadDetail";
-import Settings from "../pages/Settings";
+import Layout from "../layouts/Layout";
+import Dashboard from "../features/dashboard/Dashboard";
+import Discovery from "../features/discovery/Discovery";
+import Leads from "../features/leads/Leads";
+import LeadDetail from "../features/leads/LeadDetail";
+import Settings from "../features/settings/Settings";
 
 
 export const router = createBrowserRouter([

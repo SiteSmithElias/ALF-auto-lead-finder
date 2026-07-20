@@ -1,7 +1,7 @@
 import { useState } from "react";
-import LeadInfoCard from "../components/leads/LeadInfoCard";
-import LeadManagementCard from "../components/leads/LeadManagementCard";
-import type { LeadStatus } from "../types/lead";
+import LeadInfoCard from "./components/LeadInfoCard";
+import LeadManagementCard from "./components/LeadManagementCard";
+import type { LeadStatus } from "./lead";
 
 export default function LeadDetail() {
   const [status, setStatus] = useState<LeadStatus>("NEW");

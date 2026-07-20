@@ -1,6 +1,6 @@
-import MetricCard from "../components/dashboard/MetricCard";
-import PipelineCard from "../components/dashboard/PipelineCard";
-import RecentSearches from "../components/dashboard/RecentSearches";
+import MetricCard from "./components/MetricCard";
+import PipelineCard from "./components/PipelineCard";
+import RecentSearches from "./components/RecentSearches";
 
 export default function Dashboard() {
   return (

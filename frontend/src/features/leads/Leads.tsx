@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { Lead } from "../types/lead";
-import LeadTable from "../components/leads/LeadTable";
-import Pagination from "../components/leads/Pagination";
+import type { Lead } from "./lead";
+import LeadTable from "./components/LeadTable";
+import Pagination from "./components/Pagination";
 
 const mockLeads: Lead[] = [
   {

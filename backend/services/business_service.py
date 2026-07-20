@@ -2,10 +2,47 @@ from sqlalchemy.orm import Session
 from database.models import Business
 from utils.normalizer import clean_text, clean_url
 
-
-def get_business_by_id(
+def get_businesses(
     db: Session,
-    business_id: int,
+    page: int = 1,
+    limit: int = 50,
+    category: str | None = None,
+    city: str | None = None,
+    has_website: bool | None = None
+):
+    query = db.query(Business)
+
+    if category:
+        query = query.filter(
+            Business.category == category
+        )
+
+    if city:
+        query = query.filter(
+            Business.city == city
+        )
+
+    if has_website is not None:
+        if has_website:
+            query = query.filter(
+                Business.website.isnot(None)
+            )
+
+        else:
+            query = query.filter(
+                Business.website.is_(None)
+            )
+
+    return (
+        query
+        .offset((page - 1) * limit)
+        .limit(limit)
+        .all()
+    )
+
+def get_business(
+    db: Session,
+    business_id: int
 ):
     return (
         db.query(Business)
@@ -14,7 +51,6 @@ def get_business_by_id(
         )
         .first()
     )
-
 
 def create_business(
     db: Session,

@@ -43,6 +43,7 @@ class Lead(Base):
     status = Column(String)
     score = Column(Integer)
     score_reason = Column(String)
+    notes = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

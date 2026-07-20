@@ -13,7 +13,7 @@ export default function Layout(){
             <main className="
                 flex-1
                 p-8
-                bg-gray-50
+                bg-[var(--background)]
                 min-h-screen
             ">
 

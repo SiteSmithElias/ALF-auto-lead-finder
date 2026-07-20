@@ -27,8 +27,6 @@ class GoogleMapsParser:
     def open_maps(self, page):
         page.goto("https://www.google.com/maps")
 
-        page.pause()
-
     def accept_consent(self, page: Page) -> None:
         for selector in self.CONSENT_SELECTORS:
             locator = page.locator(selector)
@@ -78,7 +76,7 @@ class GoogleMapsParser:
         reviews_average, reviews_count = self._extract_reviews(page)
         latitude, longitude = self._extract_lat_lng(page.url or fallback_url)
         external_id = self._extract_external_id(page.url or fallback_url)
-        city, country = self._extract_city_country(address)
+        address, city, country = self.parse_address(address)
 
         return DiscoveredBusiness(
             name=name,
@@ -174,7 +172,26 @@ class GoogleMapsParser:
 
         return None
 
-    def _extract_lat_lng(self, url: str | None) -> tuple[float | None, float | None]:
+    def parse_address(self, address: str | None,) -> tuple[str | None, str | None, str | None]:
+        if not address:
+            return None, None, None
+
+        parts = [p.strip() for p in address.split(",")]
+
+        street = parts[0]
+
+        city = None
+
+        if len(parts) >= 2:
+            city = re.sub(r"^\d{4}\s+", "", parts[1]).strip()
+
+        return (
+            street,
+            city,
+            "Belgium",
+        )
+
+    def _extract_lat_lng(self,url: str | None,) -> tuple[float | None, float | None]:
         if not url:
             return None, None
 
@@ -187,15 +204,3 @@ class GoogleMapsParser:
             return float(match.group(1)), float(match.group(2))
 
         return None, None
-
-    def _extract_city_country(self, address: str | None) -> tuple[str | None, str | None]:
-        if not address:
-            return None, None
-
-        parts = [part.strip() for part in address.split(",") if part.strip()]
-        if len(parts) < 2:
-            return None, None
-
-        city = parts[-2] if len(parts) >= 2 else None
-        country = parts[-1] if len(parts) >= 1 else None
-        return city, country

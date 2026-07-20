@@ -1,5 +1,4 @@
 from database.database import SessionLocal
-
 from services.lead_score_service import save_lead_score
 
 

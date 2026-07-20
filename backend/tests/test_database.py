@@ -1,5 +1,4 @@
 from database.database import SessionLocal
-
 from services.business_service import save_company
 
 

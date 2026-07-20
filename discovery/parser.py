@@ -1,11 +1,9 @@
 from __future__ import annotations
-
 import re
 from urllib.parse import parse_qs, urlparse
-
 from playwright.sync_api import Page
-
 from discovery.models import DiscoveredBusiness
+from utils.normalizer import clean_address, clean_phone
 
 
 class GoogleMapsParser:
@@ -73,8 +71,8 @@ class GoogleMapsParser:
 
     def extract_business(self, page: Page, fallback_url: str | None = None) -> DiscoveredBusiness:
         name = self._safe_inner_text(page, self.NAME_SELECTOR)
-        address = self._button_text(page, self.ADDRESS_SELECTOR)
-        phone = self._button_text(page, self.PHONE_SELECTOR)
+        address = clean_address(self._button_text(page, self.ADDRESS_SELECTOR))
+        phone = clean_phone(self._button_text(page, self.PHONE_SELECTOR))
         website = self._anchor_href(page, self.WEBSITE_SELECTOR)
         category = self._safe_inner_text(page, self.CATEGORY_SELECTOR)
         reviews_average, reviews_count = self._extract_reviews(page)

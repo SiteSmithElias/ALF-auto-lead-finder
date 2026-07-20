@@ -1,32 +1,39 @@
-interface MetricCardProps {
-    title:string;
-    value:string | number;
-    description?:string;
+import Card from "../../../components/ui/Card";
+
+interface Props {
+  title: string;
+  value: string;
+  description: string;
+  trend?: string;
 }
 
-
 export default function MetricCard({
-    title,
-    value,
-    description
-}:MetricCardProps){
+  title,
+  value,
+  description,
+  trend,
+}: Props) {
+  return (
+    <Card>
+      <div className="space-y-3">
+        <p className="text-sm text-[var(--muted)]">
+          {title}
+        </p>
 
-    return (
-        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6">
-            <p className="text-sm opacity-70">
-                {title}
-            </p>
+        <h2 className="text-3xl font-bold">
+          {value}
+        </h2>
 
-            <h2 className="text-3xl font-bold mt-2">
-                {value}
-            </h2>
+        <p className="text-sm text-[var(--muted)]">
+          {description}
+        </p>
 
-            {
-            description &&
-            <p className="text-sm mt-2 opacity-60">
-                {description}
-            </p>
-            }
-        </div>
-    )
+        {trend && (
+          <p className="text-sm text-green-600">
+            {trend}
+          </p>
+        )}
+      </div>
+    </Card>
+  );
 }

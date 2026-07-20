@@ -1,35 +1,35 @@
-interface PaginationProps {
+import Button from "../../../components/ui/Button";
+
+interface Props {
   page: number;
-  totalPages: number;
+  total: number;
   onChange: (page: number) => void;
 }
 
 export default function Pagination({
   page,
-  totalPages,
+  total,
   onChange,
-}: PaginationProps) {
+}: Props) {
   return (
-    <div className="flex justify-center gap-3 mt-6">
-      <button
-        disabled={page === 1}
+    <div className="flex items-center justify-between">
+      <Button
+        variant="secondary"
         onClick={() => onChange(page - 1)}
-        className="px-4 py-2 rounded border border-[var(--border)]"
       >
         Previous
-      </button>
+      </Button>
 
-      <span className="px-4 py-2">
-        {page} / {totalPages}
+      <span>
+        Page {page}
       </span>
 
-      <button
-        disabled={page === totalPages}
+      <Button
+        variant="secondary"
         onClick={() => onChange(page + 1)}
-        className="px-4 py-2 rounded border border-[var(--border)]"
       >
         Next
-      </button>
+      </Button>
     </div>
   );
 }

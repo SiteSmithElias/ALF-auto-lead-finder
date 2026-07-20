@@ -1,3 +1,5 @@
+import Card from "../../../components/ui/Card";
+
 const statuses = [
   {
     name: "New",
@@ -18,7 +20,7 @@ const statuses = [
 
 export default function PipelineCard() {
   return (
-    <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6">
+    <Card>
       <h2 className="font-semibold mb-5">Lead Pipeline</h2>
 
       <div className="flex justify-between">
@@ -35,6 +37,6 @@ export default function PipelineCard() {
           </div>
         ))}
       </div>
-    </div>
+    </Card>
   );
 }

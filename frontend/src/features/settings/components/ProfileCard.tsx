@@ -1,39 +1,54 @@
-import { useState } from "react";
+import Card from "../../../components/ui/Card";
+import Input from "../../../components/ui/Input";
+import Button from "../../../components/ui/Button";
 
 export default function ProfileCard() {
-  const [name, setName] = useState("ALF User");
-
   return (
-    <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6 space-y-5">
-      <h2 className="text-lg font-semibold">
-        Profile
-      </h2>
+    <Card>
+      <div className="space-y-6">
+        <h2 className="text-lg font-semibold">
+          Profile
+        </h2>
 
-      <div className="flex items-center gap-5">
-        <div className="w-20 h-20 rounded-full bg-blue-600 text-white flex items-center justify-center text-2xl font-bold">
-          A
+        <div className="flex items-center gap-4">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[var(--primary)] text-2xl font-bold text-white">
+            A
+          </div>
+
+          <Button variant="secondary">
+            Change Photo
+          </Button>
         </div>
 
-        <button className="px-4 py-2 border border-[var(--border)] rounded-lg">
-          Upload Picture
-        </button>
+        <div className="space-y-4">
+          <div>
+            <label className="mb-2 block text-sm text-[var(--muted)]">
+              Name
+            </label>
+
+            <Input
+              value="ALF User"
+              onChange={() => {}}
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm text-[var(--muted)]">
+              Email
+            </label>
+
+            <Input
+              value=""
+              placeholder="Coming soon"
+              onChange={() => {}}
+            />
+          </div>
+        </div>
+
+        <Button>
+          Save Profile
+        </Button>
       </div>
-
-      <div>
-        <label className="block mb-2 opacity-70">
-          Name
-        </label>
-
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="px-4 py-3 rounded-lg border border-[var(--border)] bg-[var(--surface)]"
-        />
-      </div>
-
-      <button className="bg-blue-600 text-white px-5 py-3 rounded-lg">
-        Save Profile
-      </button>
-    </div>
+    </Card>
   );
 }

@@ -1,3 +1,5 @@
+import Card from "../../../components/ui/Card";
+
 const searches = [
   {
     query: "plumbers Brussels",
@@ -18,7 +20,7 @@ const searches = [
 
 export default function RecentSearches() {
   return (
-    <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6">
+    <Card>
       <h2 className="font-semibold mb-5">Recent Discoveries</h2>
 
       <table className="w-full text-left">
@@ -43,6 +45,6 @@ export default function RecentSearches() {
           ))}
         </tbody>
       </table>
-    </div>
+    </Card>
   );
 }

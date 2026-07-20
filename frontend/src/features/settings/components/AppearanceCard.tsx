@@ -1,24 +1,31 @@
+import Card from "../../../components/ui/Card";
+import Button from "../../../components/ui/Button";
 import { useTheme } from "../../../context/ThemeContext";
 
 export default function AppearanceCard() {
-  const { theme, toggleTheme } = useTheme();
+  const {
+    theme,
+    toggleTheme,
+  } = useTheme();
 
   return (
-    <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6 space-y-5">
-      <h2 className="text-lg font-semibold">
-        Appearance
-      </h2>
+    <Card>
+      <div className="space-y-5">
+        <h2 className="text-lg font-semibold">
+          Appearance
+        </h2>
 
-      <p className="opacity-70">
-        Current theme: {theme}
-      </p>
+        <p className="text-[var(--muted)]">
+          Choose how ALF looks
+        </p>
 
-      <button
-        onClick={toggleTheme}
-        className="px-5 py-3 border border-[var(--border)] rounded-lg"
-      >
-        Switch to {theme === "light" ? "Dark" : "Light"}
-      </button>
-    </div>
+        <Button
+          variant="secondary"
+          onClick={toggleTheme}
+        >
+          Switch to {theme === "light" ? "Dark" : "Light"} Mode
+        </Button>
+      </div>
+    </Card>
   );
 }

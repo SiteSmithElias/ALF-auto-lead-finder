@@ -1,32 +1,45 @@
-interface DiscoveryProgressProps {
-    progress: number;
-    found: number;
-    current: string;
+import Card from "../../../components/ui/Card";
+
+interface Props {
+  status: string;
+  found: number;
+  percentage: number;
 }
 
-export default function DiscoveryProgress({ progress, found, current }: DiscoveryProgressProps) {
-    return (
-        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6 space-y-4">
+export default function DiscoveryProgress({
+  status,
+  found,
+  percentage,
+}: Props) {
+  return (
+    <Card>
+      <div className="space-y-5">
+        <h2 className="text-lg font-semibold">
+          Discovery Progress
+        </h2>
 
-            <h2 className="font-semibold">
-                Discovery running...
-            </h2>
+        <p className="text-[var(--muted)]">
+          {status}
+        </p>
 
-            <p className="opacity-70">
-                Searching: {current}
-            </p>
-
-            <div className="w-full bg-gray-200 rounded-full h-3">
-                <div
-                    className="bg-blue-600 h-3 rounded-full"
-                    style={{ width: `${progress}%` }}
-                />
-            </div>
-
-            <p>
-                Businesses found: <strong>{found}</strong>
-            </p>
-
+        <div>
+          <p>
+            Businesses Found:
+            <strong className="ml-2">
+              {found}
+            </strong>
+          </p>
         </div>
-    );
+
+        <div className="h-3 rounded-full bg-[var(--hover)] overflow-hidden">
+          <div
+            className="h-full bg-blue-600 transition-all"
+            style={{
+              width: `${percentage}%`,
+            }}
+          />
+        </div>
+      </div>
+    </Card>
+  );
 }

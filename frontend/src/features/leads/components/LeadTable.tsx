@@ -1,65 +1,83 @@
-import type { Lead } from "../../types/lead";
 import StatusBadge from "./StatusBadge";
-import { useNavigate } from "react-router-dom";
+import Card from "../../../components/ui/Card";
+import type { Lead } from "../types";
 
+interface Props {
+  leads: Lead[];
+  onSelect: (lead: Lead) => void;
+}
 
 export default function LeadTable({
-    leads
-}:{
-    leads:Lead[]
-}){
+  leads,
+  onSelect,
+}: Props) {
+  return (
+    <Card>
+      <div className="overflow-x-auto">
+        <table className="w-full text-left">
+          <thead>
+            <tr className="border-b border-[var(--border)] text-sm text-[var(--muted)]">
+              <th className="p-4">
+                Business
+              </th>
 
-    const navigate = useNavigate();
+              <th className="p-4">
+                Category
+              </th>
 
-    return (
-        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl overflow-hidden">
-            <table className="w-full">
-                <thead>
-                    <tr className="border-b border-[var(--border)] text-left">
-                        <th className="p-4">
-                            Business
-                        </th>
-                        <th>
-                            Category
-                        </th>
-                        <th>
-                            Contact
-                        </th>
-                        <th>
-                            Score
-                        </th>
-                        <th>
-                            Status
-                        </th>
-                    </tr>
-                </thead>
+              <th className="p-4">
+                Contact
+              </th>
 
-                <tbody>
-                {leads.map((lead)=>(
-                    <tr
-                    key={lead.id}
-                    onClick={()=>navigate(`/leads/${lead.id}`)}
-                    className="border-b border-[var(--border)] hover:bg-gray-50 cursor-pointer"
-                    >
-                        <td className="p-4">
-                            {lead.business}
-                        </td>
-                        <td>
-                            {lead.category}
-                        </td>
-                        <td>
-                            {lead.phone || lead.email || "-"}
-                        </td>
-                        <td>
-                            {lead.score}
-                        </td>
-                        <td>
-                            <StatusBadge status={lead.status}/>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-        </div>
-    )
+              <th className="p-4">
+                Score
+              </th>
+
+              <th className="p-4">
+                Status
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {leads.map((lead) => (
+              <tr
+                key={lead.id}
+                onClick={() => onSelect(lead)}
+                className="cursor-pointer border-b border-[var(--border)] hover-surface"
+              >
+                <td className="p-4 font-medium">
+                  {lead.business}
+                </td>
+
+                <td className="p-4">
+                  {lead.category}
+                </td>
+
+                <td className="p-4">
+                  <div>
+                    {lead.phone ?? "-"}
+                  </div>
+
+                  <div className="text-sm text-[var(--muted)]">
+                    {lead.email ?? ""}
+                  </div>
+                </td>
+
+                <td className="p-4">
+                  <span className="font-semibold">
+                    {lead.score}
+                  </span>
+                </td>
+
+                <td className="p-4">
+                  <StatusBadge status={lead.status} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Card>
+  );
 }

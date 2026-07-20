@@ -1,25 +1,38 @@
-interface SearchInputProps {
-    value: string;
-    onChange: (value: string) => void;
-    onRemove: () => void;
+import { useState } from "react";
+import Input from "../../../components/ui/Input";
+import Button from "../../../components/ui/Button";
+import Card from "../../../components/ui/Card";
+
+interface Props {
+  onSearch: (query: string) => void;
 }
 
-export default function SearchInput({ value, onChange, onRemove }: SearchInputProps) {
-    return (
-        <div className="flex gap-3">
-            <input
-                value={value}
-                onChange={(e) => onChange(e.target.value)}
-                placeholder="Example: plumbers Brussels"
-                className="flex-1 px-4 py-3 rounded-lg border border-[var(--border)] bg-[var(--surface)]"
-            />
+export default function SearchInput({
+  onSearch,
+}: Props) {
+  const [query, setQuery] = useState("");
 
-            <button
-                onClick={onRemove}
-                className="px-4 rounded-lg border border-[var(--border)] hover:bg-gray-100"
-            >
-                ✕
-            </button>
+  return (
+    <Card>
+      <div className="space-y-5">
+        <h2 className="text-lg font-semibold">
+          Find businesses
+        </h2>
+
+        <div className="flex flex-col gap-4 md:flex-row">
+          <Input
+            placeholder="Example: plumbers Brussels"
+            value={query}
+            onChange={setQuery}
+          />
+
+          <Button
+            onClick={() => onSearch(query)}
+          >
+            Start Search
+          </Button>
         </div>
-    );
+      </div>
+    </Card>
+  );
 }

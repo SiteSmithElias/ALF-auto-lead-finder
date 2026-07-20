@@ -1,15 +1,18 @@
-import { useState } from "react";
-import type { Lead } from "./lead";
+import PageHeader from "../../components/ui/PageHeader";
+import Section from "../../components/ui/Section";
+import LeadFilters from "./components/LeadFilters";
 import LeadTable from "./components/LeadTable";
 import Pagination from "./components/Pagination";
+import { useNavigate } from "react-router-dom";
+import type { Lead } from "./types";
 
 const mockLeads: Lead[] = [
   {
     id: 1,
-    business: "Plomberie Thomas",
+    business: "John Plumbing",
     category: "Plumbing",
-    phone: "047123456",
-    score: 92,
+    phone: "047xxx",
+    score: 85,
     status: "NEW",
     hasWebsite: false,
     discoveredAt: "2026-07-20",
@@ -18,48 +21,37 @@ const mockLeads: Lead[] = [
     id: 2,
     business: "Cafe Roma",
     category: "Restaurant",
-    email: "contact@caferoma.com",
-    score: 45,
-    status: "UNKNOWN",
+    phone: "02xxx",
+    score: 40,
+    status: "REJECTED",
     hasWebsite: true,
     discoveredAt: "2026-07-19",
   },
 ];
 
 export default function Leads() {
-  const [page, setPage] = useState(1);
-
+  const navigate = useNavigate();
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold">Lead Database</h1>
+    <Section>
+      <PageHeader
+        title="Lead Database"
+        description="Manage discovered businesses and potential clients"
+      />
 
-        <p className="opacity-70 mt-2">
-          Manage discovered businesses and prospects
-        </p>
-      </div>
+      <LeadFilters />
 
-      <div className="flex gap-3">
-        <button className="px-4 py-2 border rounded">
-          No Website
-        </button>
-
-        <button className="px-4 py-2 border rounded">
-          High Score
-        </button>
-
-        <button className="px-4 py-2 border rounded">
-          Status
-        </button>
-      </div>
-
-      <LeadTable leads={mockLeads} />
+      <LeadTable
+        leads={mockLeads}
+        onSelect={(lead)=>{
+            navigate(`/leads/${lead.id}`);
+        }}
+      />
 
       <Pagination
-        page={page}
-        totalPages={20}
-        onChange={setPage}
+        page={1}
+        total={100}
+        onChange={(page) => console.log(page)}
       />
-    </div>
+    </Section>
   );
 }

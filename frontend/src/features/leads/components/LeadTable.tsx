@@ -1,6 +1,7 @@
 import StatusBadge from "./StatusBadge";
 import Card from "../../../components/ui/Card";
 import type { Lead } from "../types";
+import LeadActions from "./LeadActions";
 
 interface Props {
   leads: Lead[];
@@ -35,6 +36,10 @@ export default function LeadTable({
 
               <th className="p-4">
                 Status
+              </th>
+
+              <th className="p-4">
+                Actions
               </th>
             </tr>
           </thead>
@@ -72,6 +77,14 @@ export default function LeadTable({
 
                 <td className="p-4">
                   <StatusBadge status={lead.status} />
+                </td>
+
+                <td className="p-4">
+                    <LeadActions
+                    onView={()=>onSelect(lead)}
+                    onContact={()=>console.log("contact",lead)}
+                    onReject={()=>console.log("reject",lead)}
+                    />
                 </td>
               </tr>
             ))}

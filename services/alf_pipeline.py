@@ -4,7 +4,7 @@ from scraper.crawler import crawl_website
 from scraper.company_extractor import extract_company_info
 from scraper.contact_extractor import extract_emails
 
-from services.company_service import save_company
+from services.business_service import save_company
 from services.contact_service import save_contact
 from services.lead_score_service import save_lead_score
 

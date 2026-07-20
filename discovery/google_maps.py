@@ -39,7 +39,7 @@ class GoogleMapsScraper:
         self.parser.search(page, query)
         feed = self.parser.wait_for_results(page)
 
-        listing_urls = self._collect_listing_urls(feed, page.url)
+        listing_urls = self._collect_listing_urls(page, feed, page.url)
         businesses: list[DiscoveredBusiness] = []
 
         for listing_url in listing_urls[: self.max_listings]:
@@ -61,7 +61,7 @@ class GoogleMapsScraper:
     def close(self) -> None:
         self.browser.close()
 
-    def _collect_listing_urls(self, feed, base_url: str) -> list[str]:
+    def _collect_listing_urls(self, page, feed, base_url: str) -> list[str]:
         seen: set[str] = set()
         ordered_urls: list[str] = []
         stagnant_rounds = 0
@@ -86,7 +86,7 @@ class GoogleMapsScraper:
             if stagnant_rounds >= 2 or len(ordered_urls) >= self.max_listings:
                 break
 
-            self.parser.scroll_results(page, feed)
+            self.parser.scroll_results(feed)
             page.wait_for_timeout(1_000)
 
         return ordered_urls

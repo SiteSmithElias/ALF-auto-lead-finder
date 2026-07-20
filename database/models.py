@@ -1,126 +1,70 @@
+from datetime import datetime
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Float
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 
 from database.database import Base
 
-class Company(Base):
-    __tablename__ = "companies"
+class Business(Base):
+    __tablename__ = "businesses"
 
-    id = Column(
-        Integer,
-        primary_key=True,
-        index=True
-    )
-    name = Column(
-        String,
-        nullable=False
-    )
-    address = Column(
-        String
-    )
-    website = Column(
-        String,
-        unique=True,
-        nullable=True
-    )
-    phone = Column(
-        String
-    )
-    industry = Column(
-        String
-    )
-    category = Column(
-        String
-    )
-    description = Column(
-        Text
-    )
-    country = Column(
-        String
-    )
-    city = Column(
-        String
-    )
-    source = Column(
-        String,
-        default="google_maps",
-        nullable=False
-    )
-    external_id = Column(
-        String,
-        unique=True,
-        index=True
-    )
-    reviews_count = Column(
-        Integer
-    )
-    reviews_average = Column(
-        Float
-    )
-    latitude = Column(
-        Float
-    )
-    longitude = Column(
-        Float
-    )
-    created_at = Column(
-        DateTime(timezone=True),
-        server_default=func.now()
-    )
-    updated_at = Column(
-        DateTime(timezone=True),
-        onupdate=func.now()
-    )
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    address = Column(String)
+    city = Column(String)
+    country = Column(String)
+    phone = Column(String)
+    email = Column(String)
+    website = Column(String)
+    category = Column(String)
+    created_at = Column(DateTime,default=datetime.utcnow)
+    updated_at = Column(DateTime,default=datetime.utcnow,onupdate=datetime.utcnow)
 
-    contacts = relationship(
-    "Contact",
-    back_populates="company"
-    )
+    sources = relationship("BusinessSource", back_populates="business")
+    leads = relationship("Lead", back_populates="business")
+    contacts = relationship("Contact", back_populates="business")
+
+class BusinessSource(Base):
+    __tablename__ = "business_sources"
+
+    id = Column(Integer, primary_key=True)
+    business_id = Column(Integer, ForeignKey("businesses.id"))
+    source_type = Column(String)
+    external_id = Column(String, unique=True, nullable=True)
+    url = Column(String)
+    discovered_at = Column(DateTime, default=datetime.utcnow)
+    business = relationship("Business", back_populates="sources")
+
+class Lead(Base):
+    __tablename__ = "leads"
+
+    id = Column(Integer, primary_key=True)
+    business_id = Column(Integer, ForeignKey("businesses.id"))
+    status = Column(String)
+    score = Column(Integer)
+    score_reason = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    business = relationship("Business", back_populates="leads")
 
 class Contact(Base):
     __tablename__ = "contacts"
 
-    id = Column(
-        Integer,
-        primary_key=True,
-        index=True
-    )
-    company_id = Column(
-        Integer,
-        ForeignKey("companies.id"),
-        nullable=False
-    )
-    name = Column(
-        String
-    )
-    email = Column(
-        String
-    )
-    phone = Column(
-        String
-    )
+    id = Column(Integer, primary_key=True)
+    business_id = Column(Integer, ForeignKey("businesses.id"))
+    name = Column(String)
+    email = Column(String)
+    phone = Column(String)
+    role = Column(String)
 
-    company = relationship(
-    "Company",
-    back_populates="contacts"
-    )
+    business = relationship("Business", back_populates="contacts")
 
-class LeadScore(Base):
-    __tablename__ = "lead_scores"
+class ExcludedBusiness(Base):
+    __tablename__ = "excluded_businesses"
 
-    company_id = Column(
-        Integer,
-        ForeignKey("companies.id"),
-        primary_key=True
-    )
-    score = Column(
-        Integer
-    )
-    reason = Column(
-        Text
-    )
-    updated_at = Column(
-        DateTime(timezone=True),
-        onupdate=func.now()
-    )
+    id = Column(Integer, primary_key=True)
+    source_type = Column(String)
+    external_id = Column(String, unique=True)
+    reason = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)

@@ -62,7 +62,7 @@ class GoogleMapsParser:
                 urls.append(href)
         return urls
 
-    def scroll_results(self, page: Page, feed) -> None:
+    def scroll_results(self, feed):
         feed.evaluate(
             "(element) => { element.scrollTop = element.scrollHeight; }"
         )

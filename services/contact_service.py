@@ -1,28 +1,27 @@
 from sqlalchemy.orm import Session
-
 from database.models import Contact
-from utils.normalizer import (clean_email, clean_text)
+from utils.normalizer import clean_email, clean_text
 
 
-def save_contact(
+def create_contact(
     db: Session,
-    company_id: int,
+    business_id: int,
     name: str | None = None,
     email: str | None = None,
-    phone: str | None = None
+    phone: str | None = None,
 ):
     email = clean_email(email)
     name = clean_text(name)
+    phone = clean_text(phone)
 
     existing_contact = (
         db.query(Contact)
         .filter(
-            Contact.company_id == company_id,
+            Contact.business_id == business_id,
             Contact.email == email
         )
         .first()
     )
-
 
     if existing_contact:
         existing_contact.name = name
@@ -35,10 +34,10 @@ def save_contact(
 
 
     contact = Contact(
-        company_id=company_id,
+        business_id=business_id,
         name=name,
         email=email,
-        phone=phone
+        phone=phone,
     )
 
     db.add(contact)

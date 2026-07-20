@@ -1,15 +1,20 @@
+from database.database import SessionLocal
 from discovery.query_runner import run_queries
 
+db = SessionLocal()
 
-if __name__ == "__main__":
+results = run_queries(
+    db=db,
+    queries=[
+        "restaurants Brussels"
+    ],
+    max_listings=10,
+    headless=False,
+)
 
-    results = run_queries(
-        [
-            "plumbers Brussels"
-        ],
-        max_listings=10
-    )
+for business in results:
+    print("----------------")
+    print(business)
 
-    for business in results:
-        print("--------------------------------")
-        print(business)
+
+db.close()

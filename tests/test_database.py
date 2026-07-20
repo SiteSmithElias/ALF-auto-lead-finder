@@ -1,6 +1,6 @@
 from database.database import SessionLocal
 
-from services.company_service import save_company
+from services.business_service import save_company
 
 
 db = SessionLocal()

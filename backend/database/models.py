@@ -69,3 +69,14 @@ class ExcludedBusiness(Base):
     external_id = Column(String, unique=True)
     reason = Column(String)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+class Profile(Base):
+    __tablename__ = "profile"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    email = Column(String)
+    company_name = Column(String)
+    avatar_url = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

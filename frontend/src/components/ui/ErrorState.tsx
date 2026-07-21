@@ -1,19 +1,19 @@
 interface Props {
-  message?: string;
+    title?: string;
+    message?: string;
 }
 
 export default function ErrorState({
-  message = "Something went wrong",
+    title = "Error",
+    message = "Something went wrong",
 }: Props) {
-  return (
-    <div className="rounded-xl border border-red-300 bg-red-50 p-6 text-red-700">
-      <h3 className="font-semibold">
-        Error
-      </h3>
+    return (
+        <div className="rounded-xl border border-red-300 bg-red-50 p-6 text-red-700">
+            <h3 className="font-semibold">
+                {title}
+            </h3>
 
-      <p>
-        {message}
-      </p>
-    </div>
-  );
+            <p>{message}</p>
+        </div>
+    );
 }

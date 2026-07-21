@@ -16,9 +16,7 @@ interface LeadParams {
     search?:string;
 }
 
-interface LeadListResponse {
-    items:Lead[];
-}
+type LeadListResponse = Lead[];
 
 export const getLeads =
 async(

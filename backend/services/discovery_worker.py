@@ -7,7 +7,6 @@ def discovery_worker(
     queries,
     max_results
 ):
-    print("DISCOVERY WORKER STARTED", job_id)
     db = SessionLocal()
     try:
         update_job(
@@ -17,8 +16,6 @@ def discovery_worker(
             current_action="Starting Google Maps scraper"
         )
 
-        print("RUNNING QUERIES")
-
         businesses = run_queries(
             db=db,
             queries=queries,
@@ -26,10 +23,6 @@ def discovery_worker(
             headless=False,
             save=True
         )
-
-        print(
-        "DISCOVERY FINISHED",
-        len(businesses))
 
         update_job(
             job_id,

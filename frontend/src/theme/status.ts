@@ -1,31 +1,31 @@
 export const statusStyles = {
 
-    NEW:{
+    new:{
         label:"New",
         variant:"info"
     },
 
-    CONTACTED:{
+    contacted:{
         label:"Contacted",
         variant:"warning"
     },
 
-    CLIENT:{
+    client:{
         label:"Client",
         variant:"success"
     },
 
-    REJECTED:{
+    rejected:{
         label:"Rejected",
         variant:"danger"
     },
 
-    UNKNOWN:{
+    unknown:{
         label:"Unknown",
         variant:"default"
     },
 
-    IGNORE:{
+    ignore:{
         label:"Ignore",
         variant:"default"
     }

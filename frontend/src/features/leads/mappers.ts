@@ -1,12 +1,12 @@
-import type { Lead as ApiLead } from "../../types/lead";
+import type { Lead as ApiLead, LeadDetail } from "../../types/lead";
 import type { Lead, LeadStatus } from "./types";
 
 const statusMap: Record<string, LeadStatus> = {
-    new: "NEW",
-    contacted: "CONTACTED",
-    client: "CLIENT",
-    rejected: "REJECTED",
-    unknown: "UNKNOWN",
+    new: "new",
+    contacted: "contacted",
+    client: "client",
+    rejected: "rejected",
+    unknown: "unknown",
 };
 
 export function mapLead(apiLead: ApiLead): Lead {
@@ -17,8 +17,53 @@ export function mapLead(apiLead: ApiLead): Lead {
         phone: apiLead.business.phone ?? "",
         email: apiLead.business.email ?? "",
         score: apiLead.score,
-        status: statusMap[apiLead.status] ?? "UNKNOWN",
+        status: statusMap[apiLead.status] ?? "unknown",
         hasWebsite: apiLead.hasWebsite,
         discoveredAt: "",
     };
+}
+
+export interface LeadDetailView {
+  id: number;
+
+  business: string;
+  category: string;
+
+  phone: string;
+  email: string;
+
+  website: string;
+
+  hasWebsite: boolean;
+
+  score: number;
+  status: string;
+
+  notes: string;
+}
+
+export function mapLeadDetail(
+  lead: LeadDetail
+): LeadDetailView {
+  return {
+    id: lead.id,
+
+    business: lead.business.name,
+
+    category: lead.business.category ?? "-",
+
+    phone: lead.business.phone ?? "",
+
+    email: lead.business.email ?? "",
+
+    website: lead.business.website ?? "",
+
+    hasWebsite: !!lead.business.website,
+
+    score: lead.score ?? 0,
+
+    status: lead.status ?? "unknown",
+
+    notes: lead.notes ?? "",
+  };
 }

@@ -25,11 +25,19 @@ export interface Lead {
 
 export interface LeadDetail {
     id:number;
-    score:number;
-    status:LeadStatus;
-    score_reason:string;
     business:{
         id:number;
         name:string;
+        category?:string | null;
+        city?:string | null;
+        phone?:string | null;
+        email?:string | null;
+        website?:string | null;
     };
+    score?:number | null;
+    score_reason?:string | null;
+    status?:string | null;
+    notes?:string | null;
+    created_at:string;
+    updated_at:string;
 }

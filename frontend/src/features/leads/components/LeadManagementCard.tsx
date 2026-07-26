@@ -2,8 +2,13 @@ import Card from "../../../components/ui/Card";
 import Select from "../../../components/ui/Select";
 import TextArea from "../../../components/ui/TextArea";
 import Button from "../../../components/ui/Button";
+import type { LeadDetailView } from "../mappers";
 
-export default function LeadManagementCard() {
+interface Props {
+    lead:LeadDetailView;
+}
+
+export default function LeadManagementCard({ lead }: Props) {
   return (
     <Card>
       <h2 className="mb-5 text-lg font-semibold">
@@ -12,7 +17,7 @@ export default function LeadManagementCard() {
 
       <div className="space-y-5">
         <Select
-          value="NEW"
+          value={lead.status}
           onChange={() => {}}
           options={[
             {
@@ -35,7 +40,7 @@ export default function LeadManagementCard() {
         />
 
         <TextArea
-          value=""
+          value={lead.notes ?? ""}
           onChange={() => {}}
           placeholder="Add notes..."
         />

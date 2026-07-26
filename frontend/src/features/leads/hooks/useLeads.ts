@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getLeads } from "../../../api";
+import { getLeads, getLead } from "../../../api";
 import { mapLead } from "../mappers";
 
 export function useLeads() {
@@ -13,4 +13,16 @@ export function useLeads() {
             };
         },
     });
+}
+
+export function useLead(id:number) {
+
+    return useQuery({
+        queryKey:["lead", id],
+
+        queryFn:()=>getLead(id),
+
+        enabled:!!id,
+    });
+
 }

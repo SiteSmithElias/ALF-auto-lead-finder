@@ -1,7 +1,8 @@
 import Card from "../../../components/ui/Card";
+import type { LeadDetailView } from "../mappers";
 
 interface Props {
-  lead: any;
+    lead:LeadDetailView;
 }
 
 export default function LeadInfoCard({

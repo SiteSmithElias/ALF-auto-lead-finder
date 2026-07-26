@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from database.models import (
     Lead,
     ExcludedBusiness
@@ -88,8 +88,10 @@ def get_leads(
 ):
 
     query = (
-        db.query(Lead)
-        .join(Lead.business)
+    db.query(Lead)
+    .options(
+        joinedload(Lead.business)
+        )
     )
 
 
@@ -129,13 +131,22 @@ def get_leads(
             Lead.business.name.contains(search)
         )
 
+    total = query.count()
 
-    return (
+    items = (
         query
         .offset((page-1)*limit)
         .limit(limit)
         .all()
     )
+
+    return {
+        "items": items,
+        "page": page,
+        "limit": limit,
+        "total": total,
+        "pages": (total + limit - 1) // limit
+    }
 
 
 

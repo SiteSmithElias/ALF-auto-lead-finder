@@ -7,8 +7,10 @@ export function useLeads() {
         queryKey:["leads"],
         queryFn: async()=>{
             const response = await getLeads();
-            return response.map(mapLead);
+            return {
+                ...response,
+                items: response.items.map(mapLead)
+            };
         },
-        staleTime:1000 * 60 * 2,
     });
 }

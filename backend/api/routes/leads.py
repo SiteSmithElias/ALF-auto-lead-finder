@@ -6,6 +6,7 @@ from fastapi import (
 from sqlalchemy.orm import Session
 from database.database import get_db
 from schemas.lead import (
+    LeadListResponse,
     LeadResponse,
     LeadUpdate
 )
@@ -24,7 +25,7 @@ router = APIRouter(
 
 @router.get(
     "",
-    response_model=list[LeadResponse]
+    response_model=LeadListResponse
 )
 def list_leads(
     page:int=1,

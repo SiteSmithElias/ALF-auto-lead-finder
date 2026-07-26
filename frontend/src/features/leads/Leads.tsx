@@ -12,11 +12,13 @@ export default function Leads() {
     const navigate = useNavigate();
 
     const {
-        data: leads = [],
-        isLoading,
-        isError,
-        error,
+    data,
+    isLoading,
+    isError,
+    error,
     } = useLeads();
+
+const leads = data?.items ?? [];
 
     if (isLoading) {
     return (

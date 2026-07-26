@@ -5,8 +5,12 @@ from pydantic import BaseModel
 class LeadBusinessResponse(BaseModel):
     id: int
     name: str
-    category: Optional[str]
+    address: Optional[str]
     city: Optional[str]
+    country: Optional[str]
+    phone: Optional[str]
+    email: Optional[str]
+    category: Optional[str]
     website: Optional[str]
 
     class Config:
@@ -28,3 +32,10 @@ class LeadResponse(BaseModel):
 class LeadUpdate(BaseModel):
     status: Optional[str] = None
     notes: Optional[str] = None
+
+class LeadListResponse(BaseModel):
+    items: list[LeadResponse]
+    page: int
+    limit: int
+    total: int
+    pages: int

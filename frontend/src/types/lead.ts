@@ -18,6 +18,8 @@ export interface Lead {
         name:string;
         website:string|null;
         category:string|null;
+        phone:string|null;
+        email:string|null;
     };
 }
 

@@ -8,7 +8,9 @@ import {
   getLeadContacts,
   createContact,
   deleteContact,
+  updateContact,
 } from "../../../api/contacts";
+import type { Contact } from "../../../types/contact";
 
 export function useContacts(
   leadId: number
@@ -54,6 +56,29 @@ export function useDeleteContact() {
   return useMutation({
     mutationFn: (id: number) =>
       deleteContact(id),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [
+          "contacts",
+        ],
+      });
+    },
+  });
+}
+
+export function useUpdateContact() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      id,
+      data,
+    }: {
+      id: number;
+      data: Partial<Contact>;
+    }) =>
+      updateContact(id, data),
 
     onSuccess: () => {
       queryClient.invalidateQueries({

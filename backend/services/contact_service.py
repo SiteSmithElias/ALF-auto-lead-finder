@@ -15,14 +15,17 @@ def create_contact(
     name = clean_text(name)
     phone = clean_text(phone)
 
-    existing_contact = (
-        db.query(Contact)
-        .filter(
-            Contact.business_id == business_id,
-            Contact.email == email
+    existing_contact = None
+
+    if email:
+        existing_contact = (
+            db.query(Contact)
+            .filter(
+                Contact.business_id == business_id,
+                Contact.email == email
+            )
+            .first()
         )
-        .first()
-    )
 
     if existing_contact:
         existing_contact.name = name

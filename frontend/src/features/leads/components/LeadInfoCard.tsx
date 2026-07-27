@@ -32,8 +32,15 @@ export default function LeadInfoCard({
         </p>
 
         <p>
-          <strong>Website:</strong>
-          {lead.hasWebsite ? " Available" : " No website"}
+          <strong>Website:</strong>{" "}
+          {lead.website ? (
+            <a href={lead.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+              Visit website
+            </a>
+          ) : (
+            "-"
+          )}
+
         </p>
       </div>
     </Card>

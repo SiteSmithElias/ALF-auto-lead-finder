@@ -3,12 +3,9 @@ import { updateLead } from "../../../api/leads";
 
 
 export function useUpdateLead() {
-
     const queryClient = useQueryClient();
 
-
     return useMutation({
-
         mutationFn: ({
             id,
             data,
@@ -26,9 +23,7 @@ export function useUpdateLead() {
                     status:data.status?.toLowerCase()
                 }
             ),
-
         onSuccess: (_, variables) => {
-
             queryClient.invalidateQueries({
                 queryKey:["lead", variables.id],
             });
@@ -36,8 +31,6 @@ export function useUpdateLead() {
             queryClient.invalidateQueries({
                 queryKey:["leads"],
             });
-
         }
-
     });
 }

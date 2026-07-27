@@ -27,6 +27,7 @@ export default function Button({
         ${className}
         disabled:opacity-50
         disabled:cursor-not-allowed
+        disabled:hover:bg-inherit
       `}
     >
       {children}

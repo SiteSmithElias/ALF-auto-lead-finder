@@ -8,6 +8,7 @@ import LeadManagementCard from "./components/LeadManagementCard";
 import ContactCard from "./components/ContactCard";
 import { useLead } from "./hooks/useLeads";
 import { mapLeadDetail } from "./mappers";
+import LeadExcludeButton from "./components/LeadExcludeButton";
 
 export default function LeadDetail() {
   const { id } = useParams();
@@ -52,6 +53,10 @@ export default function LeadDetail() {
       </div>
 
       <ContactCard leadId={mappedLead.id} />
+
+        <div className="mt-6"> 
+          <LeadExcludeButton leadId={lead.id}/>
+        </div>
     </Section>
   );
 }

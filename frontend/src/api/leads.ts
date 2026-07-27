@@ -52,7 +52,10 @@ async(
 export const updateLead =
 async(
     id:number,
-    data:Partial<Lead>
+    data:{
+        status?:string;
+        notes?:string;
+    }
 )=>{
     const res = await api.patch(
         `/leads/${id}`,

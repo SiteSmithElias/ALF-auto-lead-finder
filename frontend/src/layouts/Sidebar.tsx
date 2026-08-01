@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   LayoutDashboard,
   Moon,
@@ -8,8 +9,11 @@ import {
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
+import { getProfile } from "../api/profile";
 import { useTheme } from "../context/ThemeContext";
+import type { Profile } from "../types/profile";
 import Logo from "./Logo";
+import { getMediaUrl } from "../utils/media";
 
 const links = [
   {
@@ -36,14 +40,46 @@ const links = [
 
 export default function Sidebar() {
   const { theme, toggleTheme } = useTheme();
+  const [profile, setProfile] = useState<Profile | null>(null);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const data = await getProfile();
+        setProfile(data);
+      } catch {
+        setProfile(null);
+      }
+    };
+
+    const handleProfileUpdated = () => {
+      void loadProfile();
+    };
+
+    void loadProfile();
+    window.addEventListener("profile-updated", handleProfileUpdated);
+
+    return () => {
+      window.removeEventListener("profile-updated", handleProfileUpdated);
+    };
+  }, []);
+
+  const profileName = profile?.name?.trim() || "ALF User";
+  const profileSubtitle = profile?.company_name?.trim() || "Profile";
+  const avatarUrl = getMediaUrl(profile?.avatar_url);
+  const initials = profileName
+    .split(" ")
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
 
   return (
-    <aside className="flex w-64 flex-col border-r border-[var(--border)] bg-[var(--surface)]">
+    <aside className="sticky top-0 flex h-screen w-64 flex-col border-r border-[var(--border)] bg-[var(--surface)]">
       <div className="p-4">
         <Logo />
       </div>
 
-      <nav className="flex-1 space-y-1 px-3">
+      <nav className="flex-1 space-y-1 overflow-y-auto px-3">
         {links.map((link) => {
           const Icon = link.icon;
 
@@ -69,7 +105,7 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <div className="space-y-2 border-t border-[var(--border)] p-3">
+      <div className="mt-auto space-y-2 border-t border-[var(--border)] p-3">
         <button
           onClick={toggleTheme}
           className="flex w-full items-center gap-3 rounded-lg px-4 py-3 hover-surface"
@@ -81,21 +117,32 @@ export default function Sidebar() {
           </span>
         </button>
 
-        <div className="flex items-center gap-3 rounded-lg p-3 hover-surface">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary)] text-white">
-            A
+        <NavLink
+          to="/settings"
+          className="flex w-full items-center gap-3 rounded-lg p-3 transition hover-surface"
+        >
+          <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[var(--primary)] text-white">
+            {avatarUrl ? (
+              <img
+                src={avatarUrl}
+                alt="Profile avatar"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              initials
+            )}
           </div>
 
-          <div>
-            <p className="font-medium">
-              ALF User
+          <div className="min-w-0">
+            <p className="truncate font-medium">
+              {profileName}
             </p>
 
-            <p className="text-sm text-[var(--muted)]">
-              Profile
+            <p className="truncate text-sm text-[var(--muted)]">
+              {profileSubtitle}
             </p>
           </div>
-        </div>
+        </NavLink>
       </div>
     </aside>
   );

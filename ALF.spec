@@ -4,7 +4,7 @@ from pathlib import Path
 from PyInstaller.utils.hooks import collect_submodules
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path.cwd()
 BACKEND_DIR = ROOT / "backend"
 FRONTEND_DIST = ROOT / "frontend" / "dist"
 PLAYWRIGHT_BROWSERS = ROOT / ".playwright-browsers"

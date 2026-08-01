@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 from collections.abc import Iterable
 from urllib.parse import urljoin
+from typing import Callable
 
 from discovery.browser import GoogleMapsBrowser
 from discovery.models import DiscoveredBusiness
@@ -10,6 +11,11 @@ from discovery.parser import GoogleMapsParser
 
 
 logger = logging.getLogger(__name__)
+
+ProgressCallback = Callable[
+    [int, str, int],
+    None
+]
 
 
 class GoogleMapsScraper:
@@ -28,7 +34,7 @@ class GoogleMapsScraper:
         self.max_listings = max_listings
         self.max_scroll_rounds = max_scroll_rounds
 
-    def scrape_query(self, query: str) -> list[DiscoveredBusiness]:
+    def scrape_query(self, query: str, progress_callback: ProgressCallback | None = None,) -> list[DiscoveredBusiness]:
         logger.info("Searching Google Maps for %s", query)
 
         context = self.browser.open()
@@ -39,15 +45,25 @@ class GoogleMapsScraper:
         self.parser.search(page, query)
         feed = self.parser.wait_for_results(page)
 
-        listing_urls = self._collect_listing_urls(page, feed, page.url)
+        listing_urls = self._collect_listing_urls(page, feed, page.url,)
         businesses: list[DiscoveredBusiness] = []
+        total = min(len(listing_urls), self.max_listings)
 
-        for listing_url in listing_urls[: self.max_listings]:
+        if progress_callback:
+            progress_callback(10, f"Found {total} listings, extracting details", 0,)
+
+        for index, listing_url in enumerate(listing_urls[: self.max_listings],start=1,):
             try:
                 page.goto(listing_url, wait_until="domcontentloaded")
                 page.wait_for_timeout(2_000)
                 business = self.parser.extract_business(page, fallback_url=listing_url)
                 businesses.append(business)
+                if progress_callback:
+                    progress_callback(
+                        10 + int((index / total) * 80),
+                        f"Extracting business {index}/{total}",
+                        len(businesses)
+                    )
             except Exception as exc:
                 logger.exception(
                     "Failed to extract Google Maps listing from %s: %s",

@@ -40,7 +40,7 @@ def start_discovery(
 
     return {
         "job_id": job["job_id"],
-        "status": "started",
+        "status": "running",
         "message": "Discovery started"
     }
 

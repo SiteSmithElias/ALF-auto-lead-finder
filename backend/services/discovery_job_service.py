@@ -25,3 +25,7 @@ def update_job(
 ):
     if job_id in jobs:
         jobs[job_id].update(updates)
+
+        return jobs[job_id]
+
+    return None

@@ -1,5 +1,6 @@
 import {
-    createBrowserRouter
+    createBrowserRouter,
+    Navigate
 } from "react-router-dom";
 
 
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
         element:<Layout />,
 
         children:[
+            {
+                index: true,
+                element:<Navigate to="/dashboard" replace />
+            },
 
             {
                 path:"/dashboard",
@@ -41,6 +46,11 @@ export const router = createBrowserRouter([
             {
                 path:"/settings",
                 element:<Settings/>
+            },
+
+            {
+                path:"*",
+                element:<Navigate to="/dashboard" replace />
             }
 
         ]

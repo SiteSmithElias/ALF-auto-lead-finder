@@ -1,5 +1,3 @@
-import type {Business} from "./business";
-
 export type LeadStatus =
     | "new"
     | "contacted"

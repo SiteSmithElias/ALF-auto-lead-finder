@@ -1,19 +1,23 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
-import os
-from dotenv import load_dotenv
+from sqlalchemy.orm import declarative_base, sessionmaker
+
+from app_paths import ensure_runtime_directories, get_database_url
 
 
-load_dotenv()
-DATABASE_URL = os.getenv(
-    "DATABASE_URL"
-)
+ensure_runtime_directories()
+
+DATABASE_URL = get_database_url()
+
+engine_kwargs = {}
+
+if DATABASE_URL.startswith("sqlite"):
+    engine_kwargs["connect_args"] = {
+        "check_same_thread": False,
+    }
 
 engine = create_engine(
     DATABASE_URL,
-    connect_args={
-        "check_same_thread": False
-    }
+    **engine_kwargs,
 )
 
 

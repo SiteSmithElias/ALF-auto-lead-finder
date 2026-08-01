@@ -1,4 +1,3 @@
-import os
 from fastapi import (
     APIRouter,
     Depends,
@@ -7,6 +6,9 @@ from fastapi import (
     UploadFile,
 )
 from sqlalchemy.orm import Session
+from pathlib import Path
+
+from app_paths import get_uploads_dir
 from database.database import get_db
 from schemas.profile import (
     ProfileResponse,
@@ -69,23 +71,18 @@ async def upload_avatar(
         )
 
     profile = get_profile(db)
-    extension = file.filename.split(".")[-1]
+    extension = Path(file.filename).suffix.lstrip(".") or "png"
     filename = f"avatar_{profile.id}.{extension}"
-    folder = "uploads/avatars"
-
-    os.makedirs(
-        folder,
-        exist_ok=True
-    )
-
-    filepath = f"{folder}/{filename}"
+    folder = get_uploads_dir() / "avatars"
+    folder.mkdir(parents=True, exist_ok=True)
+    filepath = folder / filename
 
     with open(filepath, "wb") as buffer:
         buffer.write(
             await file.read()
         )
 
-    profile.avatar_url = filepath
+    profile.avatar_url = f"/uploads/avatars/{filename}"
 
     db.commit()
     db.refresh(profile)

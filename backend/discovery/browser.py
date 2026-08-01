@@ -4,13 +4,14 @@ from contextlib import AbstractContextManager
 from pathlib import Path
 from typing import Optional
 
+from app_paths import get_browser_data_dir
 from playwright.sync_api import BrowserContext, Playwright, sync_playwright
 
 
 class GoogleMapsBrowser(AbstractContextManager["GoogleMapsBrowser"]):
     def __init__(
         self,
-        user_data_dir: str | Path = "browser_data",
+        user_data_dir: str | Path = get_browser_data_dir(),
         headless: bool = False,
         slow_mo: int = 0,
     ) -> None:

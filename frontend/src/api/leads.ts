@@ -11,7 +11,6 @@ interface LeadParams {
     limit?:number;
     status?:LeadStatus;
     min_score?:number;
-    category?:string;
     hasWebsite?:boolean;
     search?:string;
 }

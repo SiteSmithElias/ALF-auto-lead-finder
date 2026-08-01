@@ -5,7 +5,8 @@ export type LeadStatus =
     | "contacted"
     | "client"
     | "rejected"
-    | "unknown";
+    | "unknown"
+    | "ignore";
 
 export interface Lead {
     id:number;

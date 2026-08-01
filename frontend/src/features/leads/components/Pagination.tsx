@@ -11,22 +11,25 @@ export default function Pagination({
   total,
   onChange,
 }: Props) {
+  const pageSize = 20;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+
   return (
     <div className="flex items-center justify-between">
       <Button
         variant="secondary"
-        onClick={() => onChange(page - 1)}
+        onClick={() => onChange(Math.max(1, page - 1))}
       >
         Previous
       </Button>
 
       <span>
-        Page {page}
+        Page {page} of {totalPages}
       </span>
 
       <Button
         variant="secondary"
-        onClick={() => onChange(page + 1)}
+        onClick={() => onChange(Math.min(totalPages, page + 1))}
       >
         Next
       </Button>

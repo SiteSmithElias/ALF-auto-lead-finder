@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session, joinedload
+from sqlalchemy import or_
 from database.models import (
     Lead,
+    Business,
     ExcludedBusiness
 )
 
@@ -82,7 +84,6 @@ def get_leads(
     limit=50,
     status=None,
     min_score=None,
-    category=None,
     has_website=None,
     search=None
 ):
@@ -107,28 +108,30 @@ def get_leads(
         )
 
 
-    if category:
-        query = query.filter(
-            Lead.business.category == category
-        )
-
-
     if has_website is not None:
+        query = query.join(Lead.business)
 
         if has_website:
-            query=query.filter(
-                Lead.business.website.isnot(None)
+            query = query.filter(
+                Business.website.isnot(None)
             )
 
         else:
-            query=query.filter(
-                Lead.business.website.is_(None)
+            query = query.filter(
+                Business.website.is_(None)
             )
 
 
     if search:
-        query=query.filter(
-            Lead.business.name.contains(search)
+        search_term = f"%{search}%"
+        query = query.join(Lead.business)
+        query = query.filter(
+            or_(
+                Business.name.ilike(search_term),
+                Business.category.ilike(search_term),
+                Business.city.ilike(search_term),
+                Business.address.ilike(search_term),
+            )
         )
 
     total = query.count()

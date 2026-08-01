@@ -32,7 +32,6 @@ def list_leads(
     limit:int=50,
     status:str=None,
     min_score:int=None,
-    category:str=None,
     hasWebsite:bool=None,
     search:str=None,
     db:Session=Depends(get_db)
@@ -44,7 +43,6 @@ def list_leads(
         limit,
         status,
         min_score,
-        category,
         hasWebsite,
         search
     )

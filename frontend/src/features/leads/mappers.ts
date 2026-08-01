@@ -7,6 +7,7 @@ const statusMap: Record<string, LeadStatus> = {
     client: "client",
     rejected: "rejected",
     unknown: "unknown",
+    ignore: "ignore",
 };
 
 export function mapLead(apiLead: ApiLead): Lead {

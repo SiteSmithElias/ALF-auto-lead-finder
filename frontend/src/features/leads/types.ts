@@ -1,10 +1,6 @@
-export type LeadStatus =
-    | "new"
-    | "contacted"
-    | "rejected"
-    | "client"
-    | "unknown"
-    | "ignore";
+import type { LeadStatus as SharedLeadStatus } from "../../types/lead";
+
+export type LeadStatus = SharedLeadStatus;
 
 export interface Lead {
     id:number;

@@ -1,12 +1,35 @@
-import { useQuery } from "@tanstack/react-query";
 import {
-    getDiscoveryHistory
-} from "../../../api";
+  useMutation,
+  useQuery,
+} from "@tanstack/react-query";
 
+import {
+  startDiscovery,
+  getDiscoveryJob,
+} from "../../../api/discovery";
 
-export function useDiscoveryHistory(){
-    return useQuery({
-        queryKey:["discovery-history"],
-        queryFn:getDiscoveryHistory
-    });
+export function useStartDiscovery() {
+  return useMutation({
+    mutationFn: startDiscovery,
+  });
+}
+
+export function useDiscoveryJob(
+  jobId?: string
+) {
+  return useQuery({
+    queryKey: ["discovery", jobId],
+    queryFn: () => getDiscoveryJob(jobId!),
+    enabled: !!jobId,
+    refetchInterval: (query) => {
+      const status = query.state.data?.status;
+      if (
+        status === "completed" ||
+        status === "failed"
+      ) {
+        return false;
+      }
+      return 2000;
+    },
+  });
 }

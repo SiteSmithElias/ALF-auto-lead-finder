@@ -1,15 +1,22 @@
 import Card from "../../../components/ui/Card";
+import Button from "../../../components/ui/Button";
 
 interface Props {
   status: string;
   found: number;
   percentage: number;
+  completed?: boolean;
+  failed?: boolean;
+  onViewLeads?: () => void;
 }
 
 export default function DiscoveryProgress({
   status,
   found,
   percentage,
+  completed = false,
+  failed = false,
+  onViewLeads,
 }: Props) {
   return (
     <Card>
@@ -17,11 +24,13 @@ export default function DiscoveryProgress({
         <h2 className="text-lg font-semibold">
           Discovery Progress
         </h2>
-
         <p className="text-[var(--muted)]">
-          {status}
+          {failed
+            ? "Discovery failed."
+            : completed
+            ? "Discovery completed."
+            : status}
         </p>
-
         <div>
           <p>
             Businesses Found:
@@ -30,8 +39,7 @@ export default function DiscoveryProgress({
             </strong>
           </p>
         </div>
-
-        <div className="h-3 rounded-full bg-[var(--hover)] overflow-hidden">
+        <div className="h-3 overflow-hidden rounded-full bg-[var(--hover)]">
           <div
             className="h-full bg-blue-600 transition-all"
             style={{
@@ -39,6 +47,13 @@ export default function DiscoveryProgress({
             }}
           />
         </div>
+        {completed && (
+          <Button
+            onClick={onViewLeads}
+          >
+            View Leads
+          </Button>
+        )}
       </div>
     </Card>
   );

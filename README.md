@@ -213,6 +213,50 @@ npm run dev
 
 ---
 
+# Build the Windows desktop executable
+
+The repository includes a Windows PowerShell build script that creates the desktop app. Run the commands below from the project root (the folder containing `build-desktop.ps1`). You need Python, Node.js with npm, and PowerShell installed.
+
+1. Open PowerShell and move to the project folder:
+
+   ```powershell
+   cd "C:\path\to\ALF-auto-lead-finder"
+   ```
+
+   Replace the path with the actual folder location.
+
+2. Create and activate a Python virtual environment:
+
+   ```powershell
+   python -m venv .venv
+   .\.venv\Scripts\Activate.ps1
+   ```
+
+   If PowerShell blocks activation, run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` in that PowerShell window, then activate the environment again.
+
+3. Install the backend and desktop packaging dependencies:
+
+   ```powershell
+   python -m pip install --upgrade pip
+   python -m pip install -r backend\requirements.txt -r backend\requirements-desktop.txt
+   ```
+
+4. Build the desktop app. This installs frontend packages, compiles the frontend, downloads Playwright Chromium, and packages ALF:
+
+   ```powershell
+   .\build-desktop.ps1
+   ```
+
+5. Start the compiled app:
+
+   ```powershell
+   .\dist\ALF.exe
+   ```
+
+   The executable is `dist\ALF.exe`. On first launch it creates `data\`, `uploads\`, and the browser profile under `data\browser_data\` beside the executable. Keep these folders with the executable; they contain the app's database, uploaded files, and browser data. The build currently produces a Windows executable and must be built on Windows.
+
+---
+
 # Future Goals
 
 Planned improvements:

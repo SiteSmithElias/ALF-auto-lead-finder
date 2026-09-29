@@ -17,6 +17,7 @@ venv/
 
 # Playwright persistent profile
 browser_data/
+.playwright-browsers/
 
 # Alembic cache
 .alembic/
